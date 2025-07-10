@@ -46,6 +46,7 @@ function updateScore() {
 
 // Rotation
 let currentBody = null;
+let spawnTime = Date.now();
 
 document.getElementById("rotateLeft").addEventListener("click", () => {
   if (currentBody) Body.rotate(currentBody, -Math.PI / 18);
@@ -64,31 +65,3 @@ document.querySelectorAll(".item").forEach(item => {
     let newBody;
 
     const colors = {
-      paperclip: "#7f8c8d",
-      gear: "#3498db",
-      pencil: "#e67e22",
-      eraser: "#f1c40f",
-      string: "#9b59b6",
-      matchstick: "#c0392b",
-      gummy: "#ff69b4",
-      cord: "#2ecc71"
-    };
-
-    switch (shape) {
-      case "paperclip":
-        newBody = Bodies.rectangle(x, y, 60, 15, { render: { fillStyle: colors[shape] } });
-        break;
-      case "gear":
-        newBody = Bodies.circle(x, y, 25, { render: { fillStyle: colors[shape] } });
-        break;
-      case "pencil":
-        newBody = Bodies.rectangle(x, y, 70, 10, { render: { fillStyle: colors[shape] } });
-        break;
-      case "eraser":
-        newBody = Bodies.rectangle(x, y, 40, 25, { render: { fillStyle: colors[shape] } });
-        break;
-      case "string":
-        newBody = Bodies.rectangle(x, y, 55, 8, { render: { fillStyle: colors[shape] } });
-        break;
-      case "matchstick":
-        newBody = Bodies.rectangle(x, y, 60, 6, { render: { fillStyle: colors
