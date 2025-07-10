@@ -15,20 +15,21 @@ const render = Render.create({
     height: canvas.height,
     background: "#e6e6e6",
     wireframes: false,
+    showAngleIndicator: false
   },
 });
 
 Render.run(render);
 Engine.run(engine);
 
-// Bolt base
+// Create base bolt object
 const baseBolt = Bodies.rectangle(canvas.width / 2, canvas.height - 60, 100, 40, {
   isStatic: true,
   render: { fillStyle: "#555" }
 });
 World.add(world, baseBolt);
 
-// Mouse controls
+// Mouse interaction
 const mouse = Mouse.create(canvas);
 const mouseConstraint = MouseConstraint.create(engine, {
   mouse,
@@ -36,15 +37,14 @@ const mouseConstraint = MouseConstraint.create(engine, {
 });
 World.add(world, mouseConstraint);
 
-// Score tracking
+// Score tracker
 let score = 0;
 const scoreDisplay = document.getElementById("scoreDisplay");
-
 function updateScore() {
   scoreDisplay.textContent = `Score: ${score}`;
 }
 
-// Rotation handling
+// Rotation
 let currentBody = null;
 
 document.getElementById("rotateLeft").addEventListener("click", () => {
@@ -55,7 +55,7 @@ document.getElementById("rotateRight").addEventListener("click", () => {
   if (currentBody) Body.rotate(currentBody, Math.PI / 18);
 });
 
-// Item spawner
+// Object generator
 document.querySelectorAll(".item").forEach(item => {
   item.addEventListener("click", () => {
     const shape = item.dataset.shape;
@@ -63,30 +63,41 @@ document.querySelectorAll(".item").forEach(item => {
     const y = 100;
     let newBody;
 
+    const colors = {
+      paperclip: "#7f8c8d",
+      gear: "#3498db",
+      pencil: "#e67e22",
+      eraser: "#f1c40f",
+      string: "#9b59b6",
+      matchstick: "#c0392b",
+      gummy: "#ff69b4",
+      cord: "#2ecc71"
+    };
+
     switch (shape) {
       case "paperclip":
-        newBody = Bodies.rectangle(x, y, 60, 15, { render: { fillStyle: "#7f8c8d" } });
+        newBody = Bodies.rectangle(x, y, 60, 15, { render: { fillStyle: colors[shape] } });
         break;
       case "gear":
-        newBody = Bodies.circle(x, y, 25, { render: { fillStyle: "#3498db" } });
+        newBody = Bodies.circle(x, y, 25, { render: { fillStyle: colors[shape] } });
         break;
       case "pencil":
-        newBody = Bodies.rectangle(x, y, 70, 10, { render: { fillStyle: "#e67e22" } });
+        newBody = Bodies.rectangle(x, y, 70, 10, { render: { fillStyle: colors[shape] } });
         break;
       case "eraser":
-        newBody = Bodies.rectangle(x, y, 40, 25, { render: { fillStyle: "#f1c40f" } });
+        newBody = Bodies.rectangle(x, y, 40, 25, { render: { fillStyle: colors[shape] } });
         break;
       case "string":
-        newBody = Bodies.rectangle(x, y, 55, 8, { render: { fillStyle: "#9b59b6" } });
+        newBody = Bodies.rectangle(x, y, 55, 8, { render: { fillStyle: colors[shape] } });
         break;
       case "matchstick":
-        newBody = Bodies.rectangle(x, y, 60, 6, { render: { fillStyle: "#c0392b" } });
+        newBody = Bodies.rectangle(x, y, 60, 6, { render: { fillStyle: colors[shape] } });
         break;
       case "gummy":
-        newBody = Bodies.circle(x, y, 20, { render: { fillStyle: "#ff69b4" } });
+        newBody = Bodies.circle(x, y, 20, { render: { fillStyle: colors[shape] } });
         break;
       case "cord":
-        newBody = Bodies.rectangle(x, y, 50, 18, { render: { fillStyle: "#2ecc71" } });
+        newBody = Bodies.rectangle(x, y, 50, 18, { render: { fillStyle: colors[shape] } });
         break;
     }
 
@@ -99,7 +110,7 @@ document.querySelectorAll(".item").forEach(item => {
   });
 });
 
-// Collapse detection
+// Collapse check
 Events.on(engine, "afterUpdate", () => {
   if (!currentBody) return;
 
@@ -108,4 +119,16 @@ Events.on(engine, "afterUpdate", () => {
     const message = document.createElement("div");
     message.textContent = "💥 Collapse!";
     message.style = `
-      position
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 36px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #000;
+    `;
+    document.body.appendChild(message);
+    setTimeout(() => location.reload(), 1500);
+  }
+});
