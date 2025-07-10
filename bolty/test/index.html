@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bolty Balance - Render Test</title>
+  <style>
+    body { margin: 0; overflow: hidden; background: #ececec; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <canvas id="world"></canvas>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script>
+    const { Engine, Render, World, Bodies } = Matter;
+
+    const engine = Engine.create();
+    const world = engine.world;
+
+    const canvas = document.getElementById("world");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const render = Render.create({
+      canvas,
+      engine,
+      options: {
+        width: canvas.width,
+        height: canvas.height,
+        background: "#f0f0f0",
+        wireframes: false
+      }
+    });
+
+    Render.run(render);
+    Engine.run(engine);
+
+    // Create a visible rectangle
+    const testBox = Bodies.rectangle(canvas.width / 2, canvas.height / 2, 100, 50, {
+      render: {
+        fillStyle: "#3498db",
+        strokeStyle: "#222",
+        lineWidth: 1
+      }
+    });
+
+    World.add(world, testBox);
+  </script>
+</body>
+</html>
