@@ -61,22 +61,36 @@ document.querySelectorAll(".item").forEach(item => {
     const shape = item.dataset.shape;
     const x = canvas.width / 2;
     const y = 100;
-    let newBody, emoji = item.textContent;
+    let newBody;
 
     switch (shape) {
-      case "paperclip": newBody = Bodies.rectangle(x, y, 60, 15); break;
-      case "gear": newBody = Bodies.circle(x, y, 25); break;
-      case "pencil": newBody = Bodies.rectangle(x, y, 70, 10); break;
-      case "eraser": newBody = Bodies.rectangle(x, y, 40, 25); break;
-      case "string": newBody = Bodies.rectangle(x, y, 55, 8); break;
-      case "matchstick": newBody = Bodies.rectangle(x, y, 60, 6); break;
-      case "gummy": newBody = Bodies.circle(x, y, 20); break;
-      case "cord": newBody = Bodies.rectangle(x, y, 50, 18); break;
+      case "paperclip":
+        newBody = Bodies.rectangle(x, y, 60, 15, { render: { fillStyle: "#7f8c8d" } });
+        break;
+      case "gear":
+        newBody = Bodies.circle(x, y, 25, { render: { fillStyle: "#3498db" } });
+        break;
+      case "pencil":
+        newBody = Bodies.rectangle(x, y, 70, 10, { render: { fillStyle: "#e67e22" } });
+        break;
+      case "eraser":
+        newBody = Bodies.rectangle(x, y, 40, 25, { render: { fillStyle: "#f1c40f" } });
+        break;
+      case "string":
+        newBody = Bodies.rectangle(x, y, 55, 8, { render: { fillStyle: "#9b59b6" } });
+        break;
+      case "matchstick":
+        newBody = Bodies.rectangle(x, y, 60, 6, { render: { fillStyle: "#c0392b" } });
+        break;
+      case "gummy":
+        newBody = Bodies.circle(x, y, 20, { render: { fillStyle: "#ff69b4" } });
+        break;
+      case "cord":
+        newBody = Bodies.rectangle(x, y, 50, 18, { render: { fillStyle: "#2ecc71" } });
+        break;
     }
 
     if (newBody) {
-      newBody.render.sprite = { text: emoji };
-      newBody.label = shape;
       currentBody = newBody;
       World.add(world, newBody);
       score++;
@@ -93,11 +107,5 @@ Events.on(engine, "afterUpdate", () => {
   if (currentBody.position.y > thresholdY) {
     const message = document.createElement("div");
     message.textContent = "💥 Collapse!";
-    message.style = `position: absolute; top: 50%; left: 50%;
-                     transform: translate(-50%, -50%); font-size: 36px;
-                     background: white; padding: 20px; border-radius: 10px;
-                     box-shadow: 0 0 10px #000;`;
-    document.body.appendChild(message);
-    setTimeout(() => location.reload(), 1500); // restart
-  }
-});
+    message.style = `
+      position
