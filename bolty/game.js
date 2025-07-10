@@ -89,4 +89,22 @@ document.querySelectorAll(".item").forEach(item => {
       case "string":
         newBody = Bodies.rectangle(x, y, 55, 8, { render: { fillStyle: colors[shape] } });
         break;
-      case
+      case "matchstick":
+        newBody = Bodies.rectangle(x, y, 60, 6, { render: { fillStyle: colors[shape] } });
+        break;
+      case "gummy":
+        newBody = Bodies.circle(x, y, 20, { render: { fillStyle: colors[shape] } });
+        break;
+      case "cord":
+        newBody = Bodies.rectangle(x, y, 50, 18, { render: { fillStyle: colors[shape] } });
+        break;
+    }
+
+    if (newBody) {
+      currentBody = newBody;
+      World.add(world, newBody);
+      score++;
+      updateScore();
+    }
+  });
+});
