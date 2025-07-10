@@ -91,44 +91,4 @@ document.querySelectorAll(".item").forEach(item => {
         newBody = Bodies.rectangle(x, y, 55, 8, { render: { fillStyle: colors[shape] } });
         break;
       case "matchstick":
-        newBody = Bodies.rectangle(x, y, 60, 6, { render: { fillStyle: colors[shape] } });
-        break;
-      case "gummy":
-        newBody = Bodies.circle(x, y, 20, { render: { fillStyle: colors[shape] } });
-        break;
-      case "cord":
-        newBody = Bodies.rectangle(x, y, 50, 18, { render: { fillStyle: colors[shape] } });
-        break;
-    }
-
-    if (newBody) {
-      currentBody = newBody;
-      World.add(world, newBody);
-      score++;
-      updateScore();
-    }
-  });
-});
-
-// Collapse check
-Events.on(engine, "afterUpdate", () => {
-  if (!currentBody) return;
-
-  const thresholdY = canvas.height - 150;
-  if (currentBody.position.y > thresholdY) {
-    const message = document.createElement("div");
-    message.textContent = "💥 Collapse!";
-    message.style = `
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 36px;
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #000;
-    `;
-    document.body.appendChild(message);
-    setTimeout(() => location.reload(), 1500);
-  }
-});
+        newBody = Bodies.rectangle(x, y, 60, 6, { render: { fillStyle: colors
