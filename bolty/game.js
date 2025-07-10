@@ -43,15 +43,45 @@ function updateScore() {
   scoreDisplay.textContent = `Score: ${score}`;
 }
 
-// Rotation
+// Rotation and movement
 let currentBody = null;
 
-document.getElementById("rotateLeft").addEventListener("click", () => {
-  if (currentBody) Body.rotate(currentBody, -Math.PI / 18);
-});
+// Show instructions
+const instructions = document.createElement("div");
+instructions.innerHTML = `
+  <strong>Bolty Balance Controls</strong><br>
+  ⬅️➡️ Move object<br>
+  ⬆️⬇️ Rotate object<br>
+  🖱️ Click icons below to spawn
+`;
+instructions.style = `
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 14px;
+  background: rgba(255,255,255,0.9);
+  padding: 8px 12px;
+  border-radius: 6px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+  line-height: 1.4;
+`;
+document.body.appendChild(instructions);
 
-document.getElementById("rotateRight").addEventListener("click", () => {
-  if (currentBody) Body.rotate(currentBody, Math.PI / 18);
+// Listen for keyboard input
+document.addEventListener("keydown", event => {
+  if (!currentBody) return;
+
+  const step = 5;
+
+  if (event.key === "ArrowLeft") {
+    Body.translate(currentBody, { x: -step, y: 0 });
+  } else if (event.key === "ArrowRight") {
+    Body.translate(currentBody, { x: step, y: 0 });
+  } else if (event.key === "ArrowUp") {
+    Body.rotate(currentBody, Math.PI / 36); // clockwise
+  } else if (event.key === "ArrowDown") {
+    Body.rotate(currentBody, -Math.PI / 36); // counter-clockwise
+  }
 });
 
 // Object creation
